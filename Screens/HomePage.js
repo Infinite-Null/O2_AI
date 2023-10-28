@@ -5,15 +5,32 @@ import {EachFeaturesCard} from "../Components/Homepage/EachFeaturesCard";
 import {Heading} from "../Components/Global/Heading";
 import {TopPart} from "../Components/Homepage/TopPart";
 import {EachHistory} from "../Components/Homepage/EachHistory";
+import ToggleSwitch from "toggle-switch-react-native";
 
 export const HomePage = ({navigation}) => {
-    const {Style1}=useContext(Context)
+    const {Style1,setDarkmode,darkMode}=useContext(Context)
     return (
             <ImageBackground source={require("../Assets/artem-bryzgalov-r2CAjGQ0gSI-unsplash.jpg")} style={{flex:1,height:"100%",width:"100"}}>
                 <View style={{
                     flex:1,
                     backgroundColor:"rgba(0,0,0,0.37)"
                 }}>
+                    <View style={{
+                        alignItems:"flex-end",
+                        paddingRight:10,
+                        paddingTop:10,
+                        marginTop:6,
+                    }}>
+                        <ToggleSwitch
+                            isOn={darkMode}
+                            onColor="green"
+                            offColor="rgb(45,45,45)"
+                            label={"Dark Mode"}
+                            labelStyle={{ color: "white", fontWeight: "500" }}
+                            size="medium"
+                            onToggle={isOn => setDarkmode(isOn)}
+                        />
+                    </View>
 
                     <TopPart/>
                     <View style={{

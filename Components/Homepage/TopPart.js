@@ -3,10 +3,9 @@ import {useContext} from "react";
 import Context from "../../Context/Context";
 
 export const TopPart = () => {
-    const {Style1}=useContext(Context)
     return (
         <View style={{
-            height:200,
+            height:160,
             alignItems:"center",
             justifyContent:"center"
         }}>

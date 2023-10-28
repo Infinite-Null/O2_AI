@@ -42,7 +42,6 @@ export const AiThinking = () => {
                 }}>Thinking...</Text>
             </View>
             <View style={{
-                color:Style1.color4,
                 padding:15,
                 paddingTop:2,
                 paddingLeft:27,
@@ -50,7 +49,7 @@ export const AiThinking = () => {
                 fontSize:17,
             }}>
                 <TypeWriter minDelay={1} maxDelay={1} typing={writing} style={{
-                    color:"rgb(208,208,208)"
+                    color:Style1.color4
                 }} onTypingEnd={()=>{
                     if(writing===-1){
                         setRandom(Math.floor(Math.random() * 7))

@@ -25,7 +25,8 @@
     "react-native-svg": "^13.14.0",
     "react-native-syntax-highlighter": "^2.1.0",
     "react-native-toast-notifications": "^3.4.0",
-    "react-native-typewriter": "^0.7.0"
+    "react-native-typewriter": "^0.7.0",
+    "toggle-switch-react-native": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
