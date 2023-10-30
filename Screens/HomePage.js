@@ -8,7 +8,7 @@ import {EachHistory} from "../Components/Homepage/EachHistory";
 import ToggleSwitch from "toggle-switch-react-native";
 
 export const HomePage = ({navigation}) => {
-    const {Style1,setDarkmode,darkMode}=useContext(Context)
+    const {Style1,setDarkmode,darkMode,History}=useContext(Context)
     return (
             <ImageBackground source={require("../Assets/artem-bryzgalov-r2CAjGQ0gSI-unsplash.jpg")} style={{flex:1,height:"100%",width:"100"}}>
                 <View style={{
@@ -48,9 +48,9 @@ export const HomePage = ({navigation}) => {
                             <EachFeaturesCard navigation={navigation} image={require("../Assets/christopher-gower-m_HRfLhgABo-unsplash.jpg")} name={"Generate Code"} navigate={"CodePage"}/>
                         </ScrollView>
                         <Heading title={"Chat history"}/>
-                        <EachHistory/>
-                        <EachHistory/>
-                        <EachHistory/>
+                        {History.map((e,i)=>{
+                            return <EachHistory text={e[1].message} key={i}/>
+                        })}
                     </ScrollView>
                     <TouchableOpacity onPress={()=>{
                         navigation.navigate("ChatPage")
@@ -62,6 +62,20 @@ export const HomePage = ({navigation}) => {
                         alignItems:"center",
                         justifyContent:"center"
                     }}>
+                        <View style={{
+                            height:40,
+                            width:40,
+                            borderRadius:100000,
+                            overflow:"hidden",
+                            marginRight:5,
+                            justifyContent:"center",
+                            alignItems:"center"
+                        }}>
+                            <Image source={require("../Assets/mic.png")} style={{
+                                height:"70%",
+                                width:"70%",
+                                borderRadius:100000
+                            }}/></View>
                         <TouchableOpacity  onPress={()=>{
                             navigation.navigate("ChatPage")
                         }} style={{
@@ -75,8 +89,7 @@ export const HomePage = ({navigation}) => {
                                 paddingLeft:14
                             }}>Ask anything...</Text>
                         </TouchableOpacity>
-
-                        <TouchableOpacity style={{
+                        <View style={{
                             height:"100%",
                             alignItems:"center",
                             justifyContent:"center"
@@ -86,7 +99,7 @@ export const HomePage = ({navigation}) => {
                                 width:30,
                                 objectFit:"contain"
                             }}/>
-                        </TouchableOpacity>
+                        </View>
                     </TouchableOpacity>
                     </View>
                 </View>

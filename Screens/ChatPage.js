@@ -1,4 +1,4 @@
-import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, PermissionsAndroid, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useContext, useEffect, useRef, useState} from "react";
 import Context from "../Context/Context";
 import {Person} from "../Components/ChatPage/Person";
@@ -7,14 +7,15 @@ import {Ai} from "../Components/ChatPage/Ai";
 import {useToast} from "react-native-toast-notifications";
 import axios from "axios";
 import {AiThinking} from "../Components/ChatPage/AiThinking";
+import Voice from '@react-native-community/voice';
 
 export const ChatPage = ({navigation}) => {
+    const  {History,setHistory} = useContext(Context)
     const {Style1}=useContext(Context)
     const [scrollEnabled, setScrollEnabled] = useState(true)
     const Toast = useToast()
-    const [menu,setMenu]=useState(false)
     const [loading,setloading]=useState(false)
-    const {getData}=useContext(Context)
+    const [VoiceRecording,setVoiceRecording]=useState(false)
     const [requestBody,setRequestBody]=useState([
     ])
     const [value,setvalue]=useState("")
@@ -85,6 +86,72 @@ export const ChatPage = ({navigation}) => {
             })
         }
     },[requestBody])
+    useEffect(() => {
+        Voice.onSpeechStart = onSpeechStartHandler;
+        Voice.onSpeechEnd = onSpeechEndHandler;
+        Voice.onSpeechResults = onSpeechResultsHandler;
+
+        return () => {
+            Voice.destroy().then(Voice.removeAllListeners);
+        }
+    }, [])
+    //History
+    useEffect(() => {
+        if(chat.length===2){
+            const Prev=[...History]
+            Prev.push([])
+            Prev[Prev.length-1]=[...chat]
+            setHistory(Prev)
+            // console.log(Prev)
+        }
+        if(chat.length>2){
+            const Prev=[...History]
+            Prev[Prev.length-1]=[...chat]
+            setHistory(Prev)
+        }
+    }, [chat]);
+    const onSpeechStartHandler = (e) => {
+        console.log("start handler==>>>", e)
+    }
+    const onSpeechEndHandler = (e) => {
+        setVoiceRecording(false)
+        console.log("stop handler", e)
+    }
+
+    const onSpeechResultsHandler = (e) => {
+        let text = e.value[0]
+        setvalue(text)
+        console.log("speech result handler", e)
+    }
+
+    const startRecording = async () => {
+        setVoiceRecording(true)
+        const audio=await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
+        if(audio===false){
+            Toast.show("No Audio Permission 😟",{
+                type: "danger",
+                placement: "top",
+                duration: 3000,
+                offset: 30,
+                animationType: "zoom-in",
+            })
+            setVoiceRecording(false)
+        }
+
+        try {
+            await Voice.start('en-Us')
+        } catch (error) {
+            console.log("error raised", error)
+        }
+    }
+
+    const stopRecording = async () => {
+        try {
+            await Voice.stop()
+        } catch (error) {
+            console.log("error raised", error)
+        }
+    }
     return (
         <View style={{
             flex:1,
@@ -120,6 +187,31 @@ export const ChatPage = ({navigation}) => {
                 alignItems:"center",
                 justifyContent:"center"
             }}>
+                <TouchableOpacity onPress={()=>{
+                    if(!VoiceRecording){
+                        console.log(Voice.isAvailable())
+                        startRecording()
+                        setVoiceRecording(true)
+                    }else {
+                        setVoiceRecording(false)
+                        stopRecording()
+                    }
+
+                }} style={{
+                    height:40,
+                    width:40,
+                    borderRadius:100000,
+                    overflow:"hidden",
+                    marginRight:5,
+                    justifyContent:"center",
+                    alignItems:"center"
+                }}>
+                    <Image source={(VoiceRecording)?require("../Assets/listning.gif"):require("../Assets/mic.png")} style={{
+                        height:VoiceRecording?"100%":"70%",
+                        width:VoiceRecording?"100%":"70%",
+                        borderRadius:100000
+                    }}/>
+                </TouchableOpacity>
                 <TextInput autoFocus={true} value={value} onChangeText={(text)=>{
                     setvalue(text)
                 }} style={{
@@ -163,7 +255,6 @@ export const ChatPage = ({navigation}) => {
                     }}/>
                 </View>}
             </View>
-
         </View>
     )
 }

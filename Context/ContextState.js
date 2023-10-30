@@ -34,7 +34,11 @@ const ContextState=(props)=>{
             })
         }
     }, [darkMode]);
-    return <Context.Provider value={{Style1,darkMode,setDarkmode}}>
+    const [History,setHistory] = useState([])
+    useEffect(()=>{
+        console.log(History)
+    },[History])
+    return <Context.Provider value={{Style1,darkMode,setDarkmode,History,setHistory}}>
         {props.children}
     </Context.Provider>
 }
