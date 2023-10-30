@@ -1,5 +1,6 @@
 import Context from "./Context";
 import {useEffect, useState} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -35,10 +36,63 @@ const ContextState=(props)=>{
         }
     }, [darkMode]);
     const [History,setHistory] = useState([])
+    async function SaveDarkMode(value){
+        try {
+            await AsyncStorage.setItem('dark', value);
+        } catch (e) {
+            // saving error
+        }
+    }
+    const GetDarkMode = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('dark');
+            if (jsonValue===null){
+                setDarkmode(false)
+            }else{
+                if(jsonValue==='D'){
+                    setDarkmode(true)
+                }else{
+                    setDarkmode(false)
+                }
+
+            }
+        } catch (e) {
+            // error reading value
+        }
+    };
+    async function SaveData(){
+        try {
+            const jsonValue = JSON.stringify(History);
+            await AsyncStorage.setItem('history', jsonValue);
+        } catch (e) {
+            // saving error
+        }
+    }
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('history');
+            jsonValue != null ? JSON.parse(jsonValue) : null;
+            if (jsonValue===null){
+                setHistory([])
+            }else{
+                setHistory(JSON.parse(jsonValue))
+            }
+        } catch (e) {
+            // error reading value
+        }
+    };
     useEffect(()=>{
-        // console.log(History)
+        if(History.length!==0){
+             SaveData()
+        }
+        // const History1=History
+        // setHistory(JSON.parse(History1))
     },[History])
-    return <Context.Provider value={{Style1,darkMode,setDarkmode,History,setHistory}}>
+    useEffect( () => {
+        getData()
+        GetDarkMode()
+    }, []);
+    return <Context.Provider value={{Style1,darkMode,setDarkmode,History,setHistory,SaveData,getData,SaveDarkMode,GetDarkMode}}>
         {props.children}
     </Context.Provider>
 }

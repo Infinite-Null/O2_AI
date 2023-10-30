@@ -10,7 +10,7 @@ import {AiThinking} from "../Components/ChatPage/AiThinking";
 import Voice from '@react-native-community/voice';
 
 export const HistoryChatPage = ({navigation,route}) => {
-    const  {History,setHistory} = useContext(Context)
+    const  {History,setHistory,SaveData} = useContext(Context)
     const {Style1}=useContext(Context)
     const [scrollEnabled, setScrollEnabled] = useState(true)
     const Toast = useToast()
@@ -111,6 +111,7 @@ export const HistoryChatPage = ({navigation,route}) => {
         const Prev=[...History]
         Prev[route.params.index]=[...chat]
         setHistory(Prev)
+        SaveData()
     }, [chat]);
     const onSpeechStartHandler = (e) => {
         console.log("start handler==>>>", e)

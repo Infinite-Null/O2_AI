@@ -8,7 +8,7 @@ import {EachHistory} from "../Components/Homepage/EachHistory";
 import ToggleSwitch from "toggle-switch-react-native";
 
 export const HomePage = ({navigation}) => {
-    const {Style1,setDarkmode,darkMode,History}=useContext(Context)
+    const {Style1,setDarkmode,darkMode,History,SaveDarkMode}=useContext(Context)
     return (
             <ImageBackground source={require("../Assets/artem-bryzgalov-r2CAjGQ0gSI-unsplash.jpg")} style={{flex:1,height:"100%",width:"100"}}>
                 <View style={{
@@ -28,7 +28,14 @@ export const HomePage = ({navigation}) => {
                             label={"Dark Mode"}
                             labelStyle={{ color: "white", fontWeight: "500" }}
                             size="medium"
-                            onToggle={isOn => setDarkmode(isOn)}
+                            onToggle={isOn => {
+                                if(isOn===false){
+                                    SaveDarkMode('L')
+                                }else {
+                                    SaveDarkMode("D")
+                                }
+                                setDarkmode(isOn)
+                            }}
                         />
                     </View>
 
@@ -48,7 +55,7 @@ export const HomePage = ({navigation}) => {
                             <EachFeaturesCard navigation={navigation} image={require("../Assets/christopher-gower-m_HRfLhgABo-unsplash.jpg")} name={"Generate Code"} navigate={"CodePage"}/>
                         </ScrollView>
                         <Heading title={"Chat history"}/>
-                        {History.map((e,i)=>{
+                        {History!=undefined&&History?.map((e,i)=>{
                             return <EachHistory text={e[1].message} key={i} data={e} navigation={navigation} index={i}/>
                         })}
                     </ScrollView>

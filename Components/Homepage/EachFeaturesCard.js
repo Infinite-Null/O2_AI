@@ -8,8 +8,8 @@ export const EachFeaturesCard = ({image,navigation,name,navigate}) => {
         <TouchableOpacity onPress={()=>{
             navigation.navigate(navigate)
         }} style={{
-            height:200,
-            width:190,
+            height:160,
+            width:200,
             backgroundColor:"black",
             margin:10,
             borderRadius:10,
