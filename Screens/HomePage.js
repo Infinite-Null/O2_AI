@@ -49,7 +49,7 @@ export const HomePage = ({navigation}) => {
                         </ScrollView>
                         <Heading title={"Chat history"}/>
                         {History.map((e,i)=>{
-                            return <EachHistory text={e[1].message} key={i}/>
+                            return <EachHistory text={e[1].message} key={i} data={e} navigation={navigation} index={i}/>
                         })}
                     </ScrollView>
                     <TouchableOpacity onPress={()=>{

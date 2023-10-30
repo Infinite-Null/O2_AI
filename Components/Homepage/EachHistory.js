@@ -1,8 +1,8 @@
-import {Image, Text, View} from "react-native";
+import {Image, Text, TouchableOpacity, View} from "react-native";
 import {useContext} from "react";
 import Context from "../../Context/Context";
 
-export const EachHistory = ({text}) => {
+export const EachHistory = ({text,data,navigation,index}) => {
     const {Style1}=useContext(Context)
     function UpdatedText(text1){
         if(text1.length>60){
@@ -12,7 +12,9 @@ export const EachHistory = ({text}) => {
         }
     }
     return (
-        <View style={{
+        <TouchableOpacity onPress={()=>{
+            navigation.navigate("HistoryChatPage",{data:data,index:index})
+        }} style={{
             paddingHorizontal:5,
             marginHorizontal:20,
             marginVertical:5,
@@ -38,6 +40,6 @@ export const EachHistory = ({text}) => {
                   fontWeight:"400"
               }}>{UpdatedText(text)}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
     )
 }

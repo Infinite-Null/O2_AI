@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import Context from "../../Context/Context";
 import {Clipboard, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
@@ -6,7 +6,7 @@ import {faCopy, faRobot} from "@fortawesome/free-solid-svg-icons";
 import {useToast} from "react-native-toast-notifications";
 import StreamType from "../Global/StreamType";
 
-export const Ai = ({text}) => {
+export const Ai = ({text,noLoading=false}) => {
     const{Style1}=useContext(Context)
     const toast=useToast()
     return (
@@ -50,14 +50,22 @@ export const Ai = ({text}) => {
                     paddingLeft:5
                 }}>O2</Text>
             </View>
-            <StreamType selectable={true} style={{
+            {!noLoading&&<StreamType selectable={true} style={{
                 color:Style1.color4,
                 padding:15,
                 paddingTop:2,
                 paddingLeft:27,
                 marginTop:3,
                 fontSize:17,
-            }} text={text.split(" ")} delay={1}/>
+            }} text={text.split(" ")} delay={1}/>}
+            {noLoading&&<Text selectable={true} style={{
+                color:Style1.color4,
+                padding:15,
+                paddingTop:2,
+                paddingLeft:27,
+                marginTop:3,
+                fontSize:17,
+            }}>{text}</Text>}
         </View>
     )
 }

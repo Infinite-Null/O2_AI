@@ -7,6 +7,7 @@ import {ChatPage} from "./Screens/ChatPage";
 import {MailPage} from "./Screens/MailPage";
 import {CodePage} from "./Screens/CodePage";
 import {ToastProvider} from "react-native-toast-notifications";
+import {HistoryChatPage} from "./Screens/HistoryChatPage";
 
 
 function App(): JSX.Element {
@@ -22,6 +23,9 @@ function App(): JSX.Element {
             headerShown:false
           }}/>
           <Stack.Screen name={"ChatPage"} component={ChatPage} options={{
+            headerShown:false
+          }}/>
+          <Stack.Screen name={"HistoryChatPage"} component={HistoryChatPage} options={{
             headerShown:false
           }}/>
           <Stack.Screen name={"MailPage"} component={MailPage} options={{
