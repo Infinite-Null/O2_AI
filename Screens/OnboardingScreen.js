@@ -25,7 +25,7 @@ export const OnboardingScreen = ({navigation}) => {
                     subtitle: 'Your personal Ai assistant',
                 },
                 {
-                    backgroundColor: '#f1af85',
+                    backgroundColor: '#257e54',
                     image: <Image source={require('../Assets/mail.gif')} style={{
                         height:200,
                         width:200,
@@ -35,7 +35,7 @@ export const OnboardingScreen = ({navigation}) => {
                     subtitle: 'Generate professional mails with just one tap',
                 },
                 {
-                    backgroundColor: '#e9bcbe',
+                    backgroundColor: '#709f87',
                     image: <Image source={require('../Assets/code.gif')} style={{
                         height:200,
                         width:200,
@@ -45,7 +45,7 @@ export const OnboardingScreen = ({navigation}) => {
                     subtitle: 'A professional coder at your finger tip.',
                 },
                 {
-                    backgroundColor: '#c1c1f1',
+                    backgroundColor: '#333380',
                     title: 'Let\'s Go !',
                     subtitle:""
                 },
