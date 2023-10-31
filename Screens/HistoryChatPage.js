@@ -221,7 +221,8 @@ export const HistoryChatPage = ({navigation,route}) => {
                         borderRadius:100000
                     }}/>
                 </TouchableOpacity>
-                <TextInput autoFocus={true} value={value} onChangeText={(text)=>{
+                <TextInput multiline={true}
+                           numberOfLines={7} autoFocus={true} value={value} onChangeText={(text)=>{
                     setvalue(text)
                 }} style={{
                     backgroundColor:Style1.color5,

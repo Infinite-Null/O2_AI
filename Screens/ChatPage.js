@@ -128,20 +128,21 @@ export const ChatPage = ({navigation}) => {
 
     const startRecording = async () => {
         setVoiceRecording(true)
-        const audio=await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
-        if(audio===false){
-            Toast.show("No Audio Permission 😟",{
-                type: "danger",
-                placement: "top",
-                duration: 3000,
-                offset: 30,
-                animationType: "zoom-in",
-            })
-            setVoiceRecording(false)
-        }
+
 
         try {
             await Voice.start('en-Us')
+            const audio=await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
+            if(audio===false){
+                Toast.show("No Audio Permission 😟",{
+                    type: "danger",
+                    placement: "top",
+                    duration: 3000,
+                    offset: 30,
+                    animationType: "zoom-in",
+                })
+                setVoiceRecording(false)
+            }
         } catch (error) {
             console.log("error raised", error)
         }
@@ -214,7 +215,8 @@ export const ChatPage = ({navigation}) => {
                         borderRadius:100000
                     }}/>
                 </TouchableOpacity>
-                <TextInput autoFocus={true} value={value} onChangeText={(text)=>{
+                <TextInput multiline={true}
+                           numberOfLines={7} autoFocus={true} value={value} onChangeText={(text)=>{
                     setvalue(text)
                 }} style={{
                     backgroundColor:Style1.color5,
