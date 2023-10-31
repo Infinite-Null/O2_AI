@@ -6,6 +6,7 @@ import {Heading} from "../Components/Global/Heading";
 import {TopPart} from "../Components/Homepage/TopPart";
 import {EachHistory} from "../Components/Homepage/EachHistory";
 import ToggleSwitch from "toggle-switch-react-native";
+import {HeadingHistory} from "../Components/Global/HeadingHistory";
 
 export const HomePage = ({navigation}) => {
     const {Style1,setDarkmode,darkMode,History,SaveDarkMode}=useContext(Context)
@@ -54,8 +55,8 @@ export const HomePage = ({navigation}) => {
                             <EachFeaturesCard navigation={navigation} image={require("../Assets/kate-macate-xmddEHyCisc-unsplash.jpg")} name={"Generate Mail"} navigate={"MailPage"}/>
                             <EachFeaturesCard navigation={navigation} image={require("../Assets/christopher-gower-m_HRfLhgABo-unsplash.jpg")} name={"Generate Code"} navigate={"CodePage"}/>
                         </ScrollView>
-                        <Heading title={"Chat history"}/>
-                        {History!=undefined&&History?.map((e,i)=>{
+                        <HeadingHistory title={"Chat history"}/>
+                        {History!==undefined&&History?.map((e,i)=>{
                             return <EachHistory text={e[1].message} key={i} data={e} navigation={navigation} index={i}/>
                         })}
                     </ScrollView>
