@@ -1,4 +1,7 @@
-import {Image, PermissionsAndroid, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable prettier/prettier */
+import {Dimensions, Image, PermissionsAndroid, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useContext, useEffect, useRef, useState} from "react";
 import Context from "../Context/Context";
 import {Person} from "../Components/ChatPage/Person";
@@ -9,7 +12,10 @@ import axios from "axios";
 import {AiThinking} from "../Components/ChatPage/AiThinking";
 import Voice from '@react-native-community/voice';
 
+const windowWidth = Dimensions.get('window').width;
+
 export const ChatPage = ({navigation}) => {
+    const dangerColor = "rgba(248, 66, 66, 0.42)"
     const  {History,setHistory,SaveData} = useContext(Context)
     const {Style1}=useContext(Context)
     const [scrollEnabled, setScrollEnabled] = useState(true)
@@ -28,7 +34,7 @@ export const ChatPage = ({navigation}) => {
             const chats=[...chat]
             chats.push({
                 message:val,
-                type:"user"
+                type:"user",
             })
             setchat(chats)
             setvalue("")
@@ -46,8 +52,8 @@ export const ChatPage = ({navigation}) => {
                     'Content-Type': 'application/json',
                 },
                 data : JSON.stringify({
-                    "prompt": {"messages": requestBody}
-                })
+                    "prompt": {"messages": requestBody},
+                }),
             }
             axios.request(config).then((r)=>{
                 if(r.data.filters){
@@ -55,7 +61,7 @@ export const ChatPage = ({navigation}) => {
                     const chats=[...chat]
                     chats.push({
                         message:"My name is O2.ai, developed by Ankit Kumar Shah. How can I help you?",
-                        type:"ai"
+                        type:"ai",
                     })
                     setchat(chats)
                     setloading(false)
@@ -64,7 +70,7 @@ export const ChatPage = ({navigation}) => {
                 const chats=[...chat]
                 chats.push({
                     message:r.data.candidates[0].content,
-                    type:"ai"
+                    type:"ai",
                 })
                 setchat(chats)
                 const requestBodyData=[...requestBody]
@@ -75,8 +81,10 @@ export const ChatPage = ({navigation}) => {
                 setloading(false)
                 if(e.message==="Network Error"){
                     Toast.show("No Internet 😟",{
+                        animationDuration:90,
+                        dangerColor: dangerColor,
                         type: "danger",
-                        placement: "top",
+                        placement: "center",
                         duration: 3000,
                         offset: 30,
                         animationType: "zoom-in",
@@ -135,8 +143,10 @@ export const ChatPage = ({navigation}) => {
             const audio=await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
             if(audio===false){
                 Toast.show("No Audio Permission 😟",{
+                    animationDuration:90,
                     type: "danger",
-                    placement: "top",
+                    placement: "center",
+                    dangerColor: dangerColor,
                     duration: 3000,
                     offset: 30,
                     animationType: "zoom-in",
@@ -158,11 +168,11 @@ export const ChatPage = ({navigation}) => {
     return (
         <View style={{
             flex:1,
-            backgroundColor:Style1.color3
+            backgroundColor:"#1e1b38",
         }}>
             <TopHeader navigation={navigation} text={"Chat"}/>
 
-            <ScrollView onScrollBeginDrag={()=>{
+            <ScrollView contentContainerStyle={{paddingBottom:80}} onScrollBeginDrag={()=>{
                 setScrollEnabled(false)
             }}
                         automaticallyAdjustKeyboardInsets={false}
@@ -183,12 +193,23 @@ export const ChatPage = ({navigation}) => {
                 {loading&&<AiThinking/>}
             </ScrollView>
             <View style={{
-                paddingHorizontal:10,
-                backgroundColor:Style1.color5,
+                 position: 'absolute',
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 bottom: 10,
+                 width: windowWidth,
+                 zIndex: 2,
+            }}>
+            <View style={{
                 flexDirection:"row",
                 height:70,
                 alignItems:"center",
-                justifyContent:"center"
+                justifyContent:"center",
+                backgroundColor: '#292250',
+                paddingHorizontal: 10,
+                borderRadius: 20,
+                fontSize: windowWidth * 0.04,
+                width:"90%",
             }}>
                 <TouchableOpacity onPress={()=>{
                     if(!VoiceRecording){
@@ -207,29 +228,31 @@ export const ChatPage = ({navigation}) => {
                     overflow:"hidden",
                     marginRight:5,
                     justifyContent:"center",
-                    alignItems:"center"
+                    alignItems:"center",
                 }}>
                     <Image source={(VoiceRecording)?require("../Assets/listning.gif"):require("../Assets/mic.png")} style={{
                         height:VoiceRecording?"100%":"70%",
                         width:VoiceRecording?"100%":"70%",
-                        borderRadius:100000
+                        borderRadius:100000,
                     }}/>
                 </TouchableOpacity>
                 <TextInput multiline={true}
                            numberOfLines={7} autoFocus={true} value={value} onChangeText={(text)=>{
                     setvalue(text)
                 }} style={{
-                    backgroundColor:Style1.color5,
+                    backgroundColor:'transparent',
                     fontSize:15,
-                    color:Style1.color4,
-                    flex:1
-                }} placeholder={"Ask Anything..."} placeholderTextColor={Style1.color4}/>
+                    color:"rgba(218, 218, 218, 1.00)",
+                    flex:1,
+                }} placeholder={"Ask Anything..."} placeholderTextColor={'rgba(202, 202, 202, 0.86)'}/>
                 {!loading&&<TouchableOpacity onPress={() => {
                     if (value === "") {
                         Toast.show("Please type something...😐😐", {
                             type: "danger",
-                            placement: "top",
-                            duration: 3000,
+                            placement: "center",
+                            dangerColor: dangerColor,
+                            animationDuration:90,
+                            duration: 2000,
                             offset: 30,
                             animationType: "zoom-in",
                         })
@@ -240,24 +263,26 @@ export const ChatPage = ({navigation}) => {
                 }} style={{
                     height: "100%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    marginRight: 5,
                 }}>
                     <Image source={require("../Assets/send.png")} style={{
-                        height: 50,
-                        width: 30,
-                        objectFit: "contain"
+                        height: 25,
+                        width: 25,
+                        objectFit: "contain",
                     }}/>
                 </TouchableOpacity>}
                 {loading&& <View style={{
                     height:"100%",
                     alignItems:"center",
-                    justifyContent:"center"
+                    justifyContent:"center",
                 }}>
                     <Image source={require("../Assets/loading.gif")} style={{
                         height:"100%",
                         width:70,
                     }}/>
                 </View>}
+            </View>
             </View>
         </View>
     )

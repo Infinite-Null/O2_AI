@@ -1,116 +1,172 @@
-import {Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {useContext} from "react";
-import Context from "../Context/Context";
-import {EachFeaturesCard} from "../Components/Homepage/EachFeaturesCard";
-import {Heading} from "../Components/Global/Heading";
-import {TopPart} from "../Components/Homepage/TopPart";
-import {EachHistory} from "../Components/Homepage/EachHistory";
-import ToggleSwitch from "toggle-switch-react-native";
-import {HeadingHistory} from "../Components/Global/HeadingHistory";
+/* eslint-disable react-native/no-inline-styles */
+import {
+  View,
+  Dimensions,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+  Image,
+} from 'react-native';
+import React from 'react';
 
-export const HomePage = ({navigation}) => {
-    const {Style1,setDarkmode,darkMode,History,SaveDarkMode}=useContext(Context)
-    return (
-            <ImageBackground source={require("../Assets/artem-bryzgalov-r2CAjGQ0gSI-unsplash.jpg")} style={{flex:1,height:"100%",width:"100"}}>
-                <View style={{
-                    flex:1,
-                    backgroundColor:"rgba(0,0,0,0.37)"
-                }}>
-                    <View style={{
-                        alignItems:"flex-end",
-                        paddingRight:10,
-                        paddingTop:10,
-                        marginTop:6,
-                    }}>
-                        <ToggleSwitch
-                            isOn={darkMode}
-                            onColor="green"
-                            offColor="rgb(45,45,45)"
-                            label={"Dark Mode"}
-                            labelStyle={{ color: "white", fontWeight: "500" }}
-                            size="medium"
-                            onToggle={isOn => {
-                                if(isOn===false){
-                                    SaveDarkMode('L')
-                                }else {
-                                    SaveDarkMode("D")
-                                }
-                                setDarkmode(isOn)
-                            }}
-                        />
-                    </View>
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-                    <TopPart/>
-                    <View style={{
-                        backgroundColor:Style1.color3,
-                        flex:1,
-                        borderTopLeftRadius:20,
-                        borderTopRightRadius:20
-                    }}>
-                    <ScrollView style={{marginTop:5}}>
-                        <Heading title={"Features"}/>
-                        <ScrollView horizontal={true} contentContainerStyle={{
-                            paddingLeft:15
-                        }}>
-                            <EachFeaturesCard navigation={navigation} image={require("../Assets/kate-macate-xmddEHyCisc-unsplash.jpg")} name={"Generate Mail"} navigate={"MailPage"}/>
-                            <EachFeaturesCard navigation={navigation} image={require("../Assets/christopher-gower-m_HRfLhgABo-unsplash.jpg")} name={"Generate Code"} navigate={"CodePage"}/>
-                        </ScrollView>
-                        <HeadingHistory title={"Chat history"}/>
-                        {History!==undefined&&History?.map((e,i)=>{
-                            return <EachHistory text={e[1].message} key={i} data={e} navigation={navigation} index={i}/>
-                        })}
-                    </ScrollView>
-                    <TouchableOpacity onPress={()=>{
-                        navigation.navigate("ChatPage")
-                    }}  style={{
-                        paddingHorizontal:10,
-                        backgroundColor:Style1.color5,
-                        flexDirection:"row",
-                        height:70,
-                        alignItems:"center",
-                        justifyContent:"center"
-                    }}>
-                        <View style={{
-                            height:40,
-                            width:40,
-                            borderRadius:100000,
-                            overflow:"hidden",
-                            marginRight:5,
-                            justifyContent:"center",
-                            alignItems:"center"
-                        }}>
-                            <Image source={require("../Assets/mic.png")} style={{
-                                height:"70%",
-                                width:"70%",
-                                borderRadius:100000
-                            }}/></View>
-                        <TouchableOpacity  onPress={()=>{
-                            navigation.navigate("ChatPage")
-                        }} style={{
-                            backgroundColor:Style1.color5,
-                            fontSize:15,
-                            color:Style1.color4,
-                            flex:1
-                        }}>
-                            <Text style={{
-                                color:Style1.color4,
-                                paddingLeft:14
-                            }}>Ask anything...</Text>
-                        </TouchableOpacity>
-                        <View style={{
-                            height:"100%",
-                            alignItems:"center",
-                            justifyContent:"center"
-                        }}>
-                            <Image source={require("../Assets/send.png")} style={{
-                                height:50,
-                                width:30,
-                                objectFit:"contain"
-                            }}/>
-                        </View>
-                    </TouchableOpacity>
-                    </View>
-                </View>
-            </ImageBackground>
-    )
+export function HomePage({navigation}) {
+  return (
+    <>
+      <ScrollView
+        style={{
+          height: windowHeight,
+          backgroundColor: '#1e1b38',
+          paddingHorizontal: windowWidth * 0.045,
+          paddingTop: 10,
+        }}>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: windowWidth * 0.07,
+            fontWeight: 'bold',
+            alignSelf: 'flex-start',
+          }}>
+          Welcome Back
+        </Text>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: windowWidth * 0.04,
+            fontWeight: '300',
+            alignSelf: 'flex-start',
+          }}>
+          Get all your answers.
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 20,
+            marginTop: 20,
+          }}>
+          <EachCard
+            title={'MAIL'}
+            discreption={'Generate professional mails in with one tap.'}
+            image={require('../Assets/mail.png')}
+            color={'rgba(33, 64, 133, 0.30)'}
+          />
+          <EachCard
+            title={'CODE'}
+            discreption={'Generate error free code in with one tap.'}
+            image={require('../Assets/webpage.png')}
+            color={'rgba(146, 97, 32, 0.30)'}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 20,
+            marginTop: 20,
+          }}>
+          <EachCard
+            title={'AUDIO'}
+            discreption={'Chat with your pdf and get the best out of it'}
+            image={require('../Assets/audio.png')}
+            color={'rgba(136, 48, 48, 0.30)'}
+          />
+          <EachCard
+            title={'AI'}
+            discreption={'Chat with your pdf and get the best out of it'}
+            image={require('../Assets/ai.png')}
+            color={'#2c2250'}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+
+            paddingTop: 20,
+          }}>
+          <Text
+            style={{
+              fontSize: windowWidth * 0.05,
+              color: 'rgb(228, 228, 228)',
+              fontWeight: 'bold',
+            }}>
+            History
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 100,
+          }}>
+          <Text style={{color: 'white'}}>No Chats 😕</Text>
+        </View>
+      </ScrollView>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ChatPage')}
+        style={{
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+          bottom: 0,
+          width: windowWidth,
+          paddingBottom: 20,
+          zIndex: 2,
+        }}>
+        <TextInput
+          onFocus={() => navigation.navigate('ChatPage')}
+          style={{
+            zIndex: 1,
+            marginTop: windowHeight * 0.025,
+            width: windowWidth * 0.9,
+            marginHorizontal: windowWidth * 0.0015,
+            backgroundColor: '#292250',
+            paddingHorizontal: 20,
+            borderRadius: 20,
+            fontSize: windowWidth * 0.04,
+            paddingVertical: 20,
+          }}
+          placeholder="Start Chatting with AI"
+          placeholderTextColor={'rgb(197, 195, 195)'}
+        />
+      </TouchableOpacity>
+    </>
+  );
+}
+
+function EachCard({title, discreption, route, image, color}) {
+  return (
+    <TouchableOpacity
+      style={{
+        flex: 1,
+        backgroundColor: color,
+        borderRadius: 10,
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 20,
+      }}>
+      <Image source={image} style={{height: 100, width: 100}} />
+      <View>
+        <Text
+          style={{
+            color: 'rgb(240, 240, 240)',
+            fontSize: 20,
+            fontWeight: 'bold',
+            paddingHorizontal: 10,
+          }}>
+          {title}
+        </Text>
+        <Text
+          style={{
+            paddingHorizontal: 10,
+          }}>
+          {discreption}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
