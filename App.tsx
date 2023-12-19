@@ -32,9 +32,6 @@ function App(): JSX.Element {
           <Stack.Screen name={"ChatPage"} component={ChatPage} options={{
             headerShown:false
           }}/>
-          <Stack.Screen name={"HistoryChatPage"} component={HistoryChatPage} options={{
-            headerShown:false
-          }}/>
           <Stack.Screen name={"MailPage"} component={MailPage} options={{
             headerShown:false
           }}/>

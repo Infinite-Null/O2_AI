@@ -16,15 +16,13 @@ import {faMicrophone, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 const windowWidth = Dimensions.get('window').width;
 
 export const ChatPage = ({navigation,route}) => {
-    console.log(route.params);
     const dangerColor = 'rgba(172, 79, 79, 1.00)';
     const  {History,setHistory,SaveData} = useContext(Context);
     const [scrollEnabled, setScrollEnabled] = useState(true);
     const Toast = useToast();
     const [loading,setloading] = useState(false);
     const [VoiceRecording,setVoiceRecording] = useState(false);
-    const [requestBody,setRequestBody] = useState([
-    ]);
+    const [requestBody,setRequestBody] = useState([]);
     const [value,setvalue] = useState('');
     const [chat,setchat] = useState([]);
     async function OnPressSend(val) {
@@ -103,23 +101,41 @@ export const ChatPage = ({navigation,route}) => {
             Voice.destroy().then(Voice.removeAllListeners);
         };
     }, []);
-    //History
+    useEffect(()=>{
+        if (route.params){
+            setchat(route.params.item);
+            const requestBodyData = [];
+            route.params.item.map((e)=>{
+                requestBodyData.push({content:e.message});
+            });
+            setRequestBody(requestBodyData);
+        }
+    },[]);
+     //History
     useEffect(() => {
-        if (chat.length === 2){
-            const Prev = [...History];
-            Prev.push([]);
-            Prev[Prev.length - 1] = [...chat];
-            setHistory(Prev);
-            SaveData();
-            // console.log(Prev)
-        }
-        if (chat.length > 2){
-            const Prev = [...History];
-            Prev[Prev.length - 1] = [...chat];
-            setHistory(Prev);
-            SaveData();
-        }
-    }, [chat]);
+        if (!route.params){
+         if (chat.length === 2){
+             const Prev = [...History];
+             Prev.unshift([]);
+             Prev[0] = [...chat];
+             setHistory(Prev);
+             SaveData();
+             // console.log(Prev)
+         }
+         if (chat.length > 2){
+             const Prev = [...History];
+             Prev[0] = [...chat];
+             setHistory(Prev);
+             SaveData();
+         }} else {
+            if (chat.length !== History.length && chat.length !== 0){
+                const Prev = [...History];
+                Prev[route.params.index] = [...chat];
+                setHistory(Prev);
+                SaveData();
+            }
+         }
+     }, [chat]);
     const onSpeechStartHandler = (e) => {
         console.log('start handler==>>>', e);
     };

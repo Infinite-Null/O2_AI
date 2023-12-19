@@ -8,7 +8,7 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
 import Context from '../Context/Context';
 import EachHistorycard from '../Components/Homepage/EachHistorycard';
 
@@ -16,10 +16,13 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export function HomePage({navigation}) {
-  const {History} = useContext(Context);
-  // console.log('====================================');
-  // console.log(History);
-  // console.log('====================================');
+  const {History, SaveData, setHistory} = useContext(Context);
+  const deleteData = index => {
+    const data = [...History];
+    data.splice(index, 1);
+    setHistory(data);
+    SaveData();
+  };
   return (
     <>
       <ScrollView
@@ -114,8 +117,14 @@ export function HomePage({navigation}) {
             {<Text style={{color: 'white'}}>No Chats 😕</Text>}
           </View>
         )}
-        {History.reverse().map(item => (
-          <EachHistorycard item={item} />
+        {History.map((item, index) => (
+          <EachHistorycard
+            item={item}
+            index={index}
+            navigation={navigation}
+            key={index}
+            deleteData={deleteData}
+          />
         ))}
       </ScrollView>
       <TouchableOpacity

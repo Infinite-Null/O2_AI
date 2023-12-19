@@ -1,9 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import React, {memo} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {faPaperPlane, faTrash} from '@fortawesome/free-solid-svg-icons';
 
-function EachHistorycard({navigation, item}) {
+function EachHistorycard({navigation, item, index, deleteData}) {
   function getFormattedData(text) {
     if (text.length > 35) {
       return text.slice(0, 35) + '...';
@@ -14,7 +15,8 @@ function EachHistorycard({navigation, item}) {
   const windowWidth = Dimensions.get('window').width;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('ChatPage', {item})}
+      onPress={() => navigation.navigate('ChatPage', {item, index})}
+      key={index}
       style={{
         width: windowWidth * 0.9,
         height: 80,
@@ -26,13 +28,15 @@ function EachHistorycard({navigation, item}) {
         alignItems: 'center',
         paddingHorizontal: 20,
       }}>
-      <Text style={{color: 'white'}}>{getFormattedData(item[0].message)}</Text>
-      <FontAwesomeIcon
-        icon={faPaperPlane}
-        style={{
-          color: 'white',
-        }}
-      />
+      <Text style={{color: 'white'}}>
+        {getFormattedData(item[0]?.message ?? '')}
+      </Text>
+      <TouchableOpacity
+        onPress={() => {
+          deleteData(index);
+        }}>
+        <FontAwesomeIcon icon={faTrash} color="white" />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 }

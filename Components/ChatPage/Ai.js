@@ -46,6 +46,13 @@ function Ai({text}) {
             text: {
               color: 'rgb(236, 236, 236)',
             },
+            blockquote: {
+              backgroundColor: '#201d1d',
+              color: 'rgba(243, 232, 130, 0.88)',
+              fontSize: width * 0.033,
+              borderRadius: 10,
+              borderColor: 'rgba(243, 232, 130, 0.88)',
+            },
             fence: {
               backgroundColor: '#080808',
               color: 'rgba(243, 232, 130, 0.88)',
