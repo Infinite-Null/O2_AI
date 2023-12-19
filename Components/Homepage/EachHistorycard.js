@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
+import {Text, TouchableOpacity, Dimensions} from 'react-native';
 import React, {memo} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
 
 function EachHistorycard({navigation, item, index, deleteData}) {
   function getFormattedData(text) {

@@ -8,7 +8,7 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import React, {useCallback, useContext} from 'react';
+import React, {useContext} from 'react';
 import Context from '../Context/Context';
 import EachHistorycard from '../Components/Homepage/EachHistorycard';
 
@@ -64,6 +64,8 @@ export function HomePage({navigation}) {
             discreption={'Generate professional mails in with one tap.'}
             image={require('../Assets/mail.png')}
             color={'rgba(33, 64, 133, 0.30)'}
+            navigation={navigation}
+            route={'MailPage'}
           />
           <EachCard
             title={'CODE'}
@@ -159,9 +161,10 @@ export function HomePage({navigation}) {
   );
 }
 
-function EachCard({title, discreption, route, image, color}) {
+function EachCard({title, discreption, navigation, route, image, color}) {
   return (
     <TouchableOpacity
+      onPress={() => navigation.navigate(route)}
       style={{
         flex: 1,
         backgroundColor: color,
