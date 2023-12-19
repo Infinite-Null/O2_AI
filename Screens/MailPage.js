@@ -14,6 +14,7 @@ import {TopHeader} from '../Components/Global/TopHeader';
 import {useState} from 'react';
 import {useToast} from 'react-native-toast-notifications';
 import axios from 'axios';
+import ResultDisplay from '../Components/Global/ReaultDiaplay';
 
 export const MailPage = ({navigation}) => {
   const width = Dimensions.get('window').width;
@@ -194,7 +195,7 @@ export const MailPage = ({navigation}) => {
         {loading && (
           <View
             style={{
-              backgroundColor: '#413f88',
+              backgroundColor: '#292250',
               marginHorizontal: 20,
               alignItems: 'center',
               justifyContent: 'center',
@@ -212,53 +213,7 @@ export const MailPage = ({navigation}) => {
           </View>
         )}
 
-        {email !== '' && (
-          <View style={{marginBottom: 10}}>
-            <Text
-              selectable={true}
-              style={{
-                padding: 18,
-                backgroundColor: '#3b3480',
-                marginHorizontal: 20,
-                marginTop: 20,
-                color: 'white',
-                fontSize: width * 0.038,
-                borderTopRightRadius: 15,
-                borderTopLeftRadius: 15,
-              }}>
-              {email}
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                Clipboard.setString(email);
-                Toast.show('Copied!', {
-                  type: 'normal',
-                  placement: 'bottom',
-                  duration: 4000,
-                  offset: 30,
-                  animationType: 'slide-in',
-                });
-              }}
-              style={{
-                backgroundColor: '#4341c2',
-                marginHorizontal: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 50,
-                borderBottomRightRadius: 15,
-                borderBottomLeftRadius: 15,
-              }}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: width * 0.036,
-                  color: 'white',
-                }}>
-                Copy
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        {email !== '' && <ResultDisplay text={email} />}
       </ScrollView>
     </View>
   );

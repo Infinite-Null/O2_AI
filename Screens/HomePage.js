@@ -72,6 +72,8 @@ export function HomePage({navigation}) {
             discreption={'Generate error free code in with one tap.'}
             image={require('../Assets/webpage.png')}
             color={'rgba(146, 97, 32, 0.30)'}
+            navigation={navigation}
+            route={'CodePage'}
           />
         </View>
         <View
