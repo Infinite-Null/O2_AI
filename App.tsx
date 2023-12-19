@@ -10,6 +10,7 @@ import {ToastProvider} from 'react-native-toast-notifications';
 import {OnboardingScreen} from './Screens/OnboardingScreen';
 import {Initial} from './Screens/Initial';
 import {EsseyPage} from './Screens/EsseyPage';
+import {PlagiarismPage} from './Screens/Plagiarism';
 
 function App(): JSX.Element {
   const Stack = createNativeStackNavigator();
@@ -56,6 +57,13 @@ function App(): JSX.Element {
             <Stack.Screen
               name={'EsseyPage'}
               component={EsseyPage}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={'PlagiarismPage'}
+              component={PlagiarismPage}
               options={{
                 headerShown: false,
               }}

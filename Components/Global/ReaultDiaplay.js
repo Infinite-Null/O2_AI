@@ -104,6 +104,7 @@ function ResultDisplay({text}) {
             alignItems: 'center',
             flexDirection: 'row',
             justifyContent: 'center',
+            marginTop: 10,
           }}
           onPress={() => {
             Clipboard.setString(text);

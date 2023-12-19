@@ -86,15 +86,17 @@ export function HomePage({navigation}) {
             title={'ESSEY'}
             discreption={'Generate essay on any topic.'}
             image={require('../Assets/Essey.png')}
-            color={'rgba(136, 48, 85, 0.22)'}
+            color={'rgba(136, 48, 48, 0.18)'}
             navigation={navigation}
             route={'EsseyPage'}
           />
           <EachCard
-            title={'AI'}
-            discreption={'Chat with your pdf and get the best out of it'}
+            title={'PLAGIARISM'}
+            discreption={'Remove plagiarism of any text in one tap.'}
             image={require('../Assets/ai.png')}
             color={'#2c2250'}
+            route={'PlagiarismPage'}
+            navigation={navigation}
           />
         </View>
         <View
