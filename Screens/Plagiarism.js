@@ -18,6 +18,7 @@ import ResultDiaplay from '../Components/Global/ReaultDiaplay';
 
 export const PlagiarismPage = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
   const [input, setInput] = useState('');
   const [loading, setloading] = useState(false);
   const [result, setResult] = useState('');
@@ -55,7 +56,6 @@ export const PlagiarismPage = ({navigation}) => {
         .request(config)
         .then(r => {
           setResult(r.data.candidates[0].content);
-          setInput('');
           setloading(false);
         })
         .catch(e => {
@@ -92,6 +92,7 @@ export const PlagiarismPage = ({navigation}) => {
             <TextInput
               clearButtonMode="while-editing"
               multiline={true}
+              scrollEnabled={true}
               numberOfLines={6}
               placeholder={'Paragraph...'}
               value={input}
@@ -104,6 +105,7 @@ export const PlagiarismPage = ({navigation}) => {
                 alignItems: 'flex-start',
                 textAlignVertical: 'top',
                 padding: 15,
+                maxHeight: windowHeight * 0.35,
                 color: 'white',
                 borderBottomWidth: 1,
                 borderBottomColor: '#100b2e',

@@ -72,9 +72,6 @@ export const MailPage = ({navigation}) => {
         .request(config)
         .then(r => {
           setemail(r.data.candidates[0].content);
-          setvalueName('');
-          setvalueSubject('');
-          setvalueTo('');
           setloading(false);
         })
         .catch(e => {
@@ -89,9 +86,6 @@ export const MailPage = ({navigation}) => {
             });
             return;
           }
-          setvalueName('');
-          setvalueSubject('');
-          setvalueTo('');
           console.log(e.message);
         });
     }
@@ -169,28 +163,62 @@ export const MailPage = ({navigation}) => {
           />
         </View>
         {!loading && (
-          <TouchableOpacity
-            onPress={() => {
-              ComposeEmail();
-            }}
+          <View
             style={{
-              backgroundColor: '#4341c2',
-              marginHorizontal: 20,
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 50,
-              borderBottomRightRadius: 10,
-              borderBottomLeftRadius: 10,
+              flexDirection: 'row',
+              gap: 2,
             }}>
-            <Text
+            <TouchableOpacity
+              onPress={() => {
+                if (!loading) {
+                  setvalueName('');
+                  setvalueSubject('');
+                  setvalueTo('');
+                }
+              }}
               style={{
-                textAlign: 'center',
-                fontSize: width * 0.036,
-                color: 'white',
+                backgroundColor: '#4341c2',
+                marginLeft: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 50,
+                flex: 1,
+                borderBottomLeftRadius: 10,
               }}>
-              Compose
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: width * 0.032,
+                  color: 'rgb(236, 236, 236)',
+                }}>
+                Clear text
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (!loading) {
+                  ComposeEmail();
+                }
+              }}
+              style={{
+                backgroundColor: '#4341c2',
+                marginRight: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 50,
+                flex: 1,
+                borderBottomRightRadius: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: width * 0.032,
+                  color: 'rgb(236, 236, 236)',
+                }}>
+                Compose
+              </Text>
+            </TouchableOpacity>
+          </View>
         )}
         {loading && (
           <View

@@ -54,11 +54,9 @@ export const EsseyPage = ({navigation}) => {
         .request(config)
         .then(r => {
           setResult(r.data.candidates[0].content);
-          setInput('');
           setloading(false);
         })
         .catch(e => {
-          setInput('');
           setloading(false);
           if (e.message === 'Network Error') {
             toast.show('No Internet 😟', {
@@ -90,6 +88,9 @@ export const EsseyPage = ({navigation}) => {
               overflow: 'hidden',
             }}>
             <TextInput
+              multiline={true}
+              scrollEnabled={true}
+              numberOfLines={3}
               placeholder={'Topic'}
               value={input}
               onChangeText={text => {
@@ -97,6 +98,8 @@ export const EsseyPage = ({navigation}) => {
               }}
               placeholderTextColor={'rgb(197, 195, 195)'}
               style={{
+                maxHeight: 120,
+                textAlignVertical: 'top',
                 backgroundColor: '#292250',
                 padding: 15,
                 color: 'white',
@@ -107,30 +110,60 @@ export const EsseyPage = ({navigation}) => {
           </View>
         </View>
         {!loading && (
-          <TouchableOpacity
-            onPress={() => {
-              if (!loading) {
-                GenerateCode();
-              }
-            }}
+          <View
             style={{
-              backgroundColor: '#4341c2',
-              marginHorizontal: 20,
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 50,
-              borderBottomRightRadius: 10,
-              borderBottomLeftRadius: 10,
+              flexDirection: 'row',
+              gap: 2,
             }}>
-            <Text
+            <TouchableOpacity
+              onPress={() => {
+                if (!loading) {
+                  setInput('');
+                }
+              }}
               style={{
-                textAlign: 'center',
-                fontSize: windowWidth * 0.035,
-                color: 'rgb(236, 236, 236)',
+                backgroundColor: '#4341c2',
+                marginLeft: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 50,
+                flex: 1,
+                borderBottomLeftRadius: 10,
               }}>
-              Generate
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: windowWidth * 0.032,
+                  color: 'rgb(236, 236, 236)',
+                }}>
+                Clear text
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (!loading) {
+                  GenerateCode();
+                }
+              }}
+              style={{
+                backgroundColor: '#4341c2',
+                marginRight: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 50,
+                flex: 1,
+                borderBottomRightRadius: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: windowWidth * 0.032,
+                  color: 'rgb(236, 236, 236)',
+                }}>
+                Generate
+              </Text>
+            </TouchableOpacity>
+          </View>
         )}
         {loading && (
           <View
