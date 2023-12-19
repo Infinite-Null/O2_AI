@@ -9,6 +9,7 @@ import {CodePage} from './Screens/CodePage';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {OnboardingScreen} from './Screens/OnboardingScreen';
 import {Initial} from './Screens/Initial';
+import {EsseyPage} from './Screens/EsseyPage';
 
 function App(): JSX.Element {
   const Stack = createNativeStackNavigator();
@@ -48,6 +49,13 @@ function App(): JSX.Element {
             <Stack.Screen
               name={'MailPage'}
               component={MailPage}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={'EsseyPage'}
+              component={EsseyPage}
               options={{
                 headerShown: false,
               }}

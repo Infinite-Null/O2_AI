@@ -71,7 +71,7 @@ export function HomePage({navigation}) {
             title={'CODE'}
             discreption={'Generate error free code in with one tap.'}
             image={require('../Assets/webpage.png')}
-            color={'rgba(146, 97, 32, 0.30)'}
+            color={'rgba(146, 97, 32, 0.25)'}
             navigation={navigation}
             route={'CodePage'}
           />
@@ -83,10 +83,12 @@ export function HomePage({navigation}) {
             marginTop: 20,
           }}>
           <EachCard
-            title={'AUDIO'}
-            discreption={'Chat with your pdf and get the best out of it'}
-            image={require('../Assets/audio.png')}
-            color={'rgba(136, 48, 48, 0.30)'}
+            title={'ESSEY'}
+            discreption={'Generate essay on any topic.'}
+            image={require('../Assets/Essey.png')}
+            color={'rgba(136, 48, 85, 0.22)'}
+            navigation={navigation}
+            route={'EsseyPage'}
           />
           <EachCard
             title={'AI'}
@@ -177,7 +179,7 @@ function EachCard({title, discreption, navigation, route, image, color}) {
         paddingBottom: 20,
       }}>
       <Image source={image} style={{height: 100, width: 100}} />
-      <View>
+      <View style={{width: '100%'}}>
         <Text
           style={{
             color: 'rgb(240, 240, 240)',
