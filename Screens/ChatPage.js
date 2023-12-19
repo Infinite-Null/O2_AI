@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable prettier/prettier */
-import {Dimensions, FlatList, Image, PermissionsAndroid, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {useContext, useEffect, useRef, useState} from 'react';
+import {Dimensions, Image, PermissionsAndroid, TextInput, TouchableOpacity, View} from 'react-native';
+import {useContext, useEffect, useState} from 'react';
 import Context from '../Context/Context';
 import {TopHeader} from '../Components/Global/TopHeader';
 import {useToast} from 'react-native-toast-notifications';
 import axios from 'axios';
-import {AiThinking} from '../Components/ChatPage/AiThinking';
 import Voice from '@react-native-community/voice';
 import ChatScroll from '../Components/ChatPage/ChatScroll';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -15,7 +15,8 @@ import {faMicrophone, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
 const windowWidth = Dimensions.get('window').width;
 
-export const ChatPage = ({navigation}) => {
+export const ChatPage = ({navigation,route}) => {
+    console.log(route.params);
     const dangerColor = 'rgba(172, 79, 79, 1.00)';
     const  {History,setHistory,SaveData} = useContext(Context);
     const [scrollEnabled, setScrollEnabled] = useState(true);
@@ -174,6 +175,7 @@ export const ChatPage = ({navigation}) => {
         }}>
             <TopHeader navigation={navigation} text={'Chat'}/>
            <ChatScroll chat={chat} scrollEnabled={scrollEnabled}/>
+           {/* <AiThinking/> */}
            <View style={{
             height:85,
            }} />

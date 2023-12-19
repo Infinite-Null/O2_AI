@@ -8,12 +8,18 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
+import Context from '../Context/Context';
+import EachHistorycard from '../Components/Homepage/EachHistorycard';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export function HomePage({navigation}) {
+  const {History} = useContext(Context);
+  // console.log('====================================');
+  // console.log(History);
+  // console.log('====================================');
   return (
     <>
       <ScrollView
@@ -22,6 +28,9 @@ export function HomePage({navigation}) {
           backgroundColor: '#1e1b38',
           paddingHorizontal: windowWidth * 0.045,
           paddingTop: 10,
+        }}
+        contentContainerStyle={{
+          paddingBottom: 100,
         }}>
         <Text
           style={{
@@ -83,7 +92,6 @@ export function HomePage({navigation}) {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-
             paddingTop: 20,
           }}>
           <Text
@@ -95,15 +103,20 @@ export function HomePage({navigation}) {
             History
           </Text>
         </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingTop: 100,
-          }}>
-          <Text style={{color: 'white'}}>No Chats 😕</Text>
-        </View>
+        {History.length === 0 && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 100,
+            }}>
+            {<Text style={{color: 'white'}}>No Chats 😕</Text>}
+          </View>
+        )}
+        {History.reverse().map(item => (
+          <EachHistorycard item={item} />
+        ))}
       </ScrollView>
       <TouchableOpacity
         onPress={() => navigation.navigate('ChatPage')}
