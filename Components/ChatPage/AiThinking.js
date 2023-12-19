@@ -3,7 +3,6 @@ import Context from "../../Context/Context";
 import {Clipboard, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faCopy, faRobot} from "@fortawesome/free-solid-svg-icons";
-import {useToast} from "react-native-toast-notifications";
 import TypeWriter from "react-native-typewriter";
 
 export const AiThinking = () => {
@@ -18,7 +17,6 @@ export const AiThinking = () => {
         "Riding the waves of data...👩‍💻"
     ]
     const [writing,setWriting]=useState(1)
-    const{Style1}=useContext(Context)
     return (
         <View style={{
             backgroundColor:Style1.color5,

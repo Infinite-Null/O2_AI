@@ -1,8 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
-import {useContext} from 'react';
-import Context from '../../Context/Context';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
