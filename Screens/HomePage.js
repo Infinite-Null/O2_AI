@@ -61,7 +61,7 @@ export function HomePage({navigation}) {
           }}>
           <EachCard
             title={'MAIL'}
-            discreption={'Generate professional mails in with one tap.'}
+            discreption={'Generate professional mail in with one tap.'}
             image={require('../Assets/mail.png')}
             color={'rgba(33, 64, 133, 0.30)'}
             navigation={navigation}
@@ -185,7 +185,7 @@ function EachCard({title, discreption, navigation, route, image, color}) {
         <Text
           style={{
             color: 'rgb(240, 240, 240)',
-            fontSize: 20,
+            fontSize: windowWidth * 0.055,
             fontWeight: 'bold',
             paddingHorizontal: 10,
           }}>
@@ -194,6 +194,7 @@ function EachCard({title, discreption, navigation, route, image, color}) {
         <Text
           style={{
             paddingHorizontal: 10,
+            fontSize: windowWidth * 0.033,
           }}>
           {discreption}
         </Text>
