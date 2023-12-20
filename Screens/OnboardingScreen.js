@@ -7,7 +7,7 @@ import {Dimensions} from 'react-native';
 export const OnboardingScreen = ({navigation}) => {
   const width = Dimensions.get('window').width;
   return (
-    <Onboarding  
+    <Onboarding
       skipToPage={1}
       titleStyles={{
         fontSize: width * 0.3,
