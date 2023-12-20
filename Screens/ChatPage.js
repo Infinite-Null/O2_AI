@@ -12,6 +12,7 @@ import Voice from '@react-native-community/voice';
 import ChatScroll from '../Components/ChatPage/ChatScroll';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faMicrophone, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import Apikey from '../Apikey';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -46,7 +47,7 @@ export const ChatPage = ({navigation,route}) => {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key={Your Key}',
+                url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=' + Apikey,
                 headers: {
                     'Content-Type': 'application/json',
                 },

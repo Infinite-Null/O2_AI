@@ -61,7 +61,7 @@ export function HomePage({navigation}) {
           }}>
           <EachCard
             title={'MAIL'}
-            discreption={'Generate professional mail in with one tap.'}
+            discreption={'Generate professional mail in one tap.'}
             image={require('../Assets/mail.png')}
             color={'rgba(33, 64, 133, 0.30)'}
             navigation={navigation}
@@ -69,7 +69,7 @@ export function HomePage({navigation}) {
           />
           <EachCard
             title={'CODE'}
-            discreption={'Generate error free code in with one tap.'}
+            discreption={'Generate error free code in one tap.'}
             image={require('../Assets/webpage.png')}
             color={'rgba(146, 97, 32, 0.25)'}
             navigation={navigation}
@@ -83,8 +83,8 @@ export function HomePage({navigation}) {
             marginTop: 20,
           }}>
           <EachCard
-            title={'ESSEY'}
-            discreption={'Generate essay on any topic.'}
+            title={'ESSAY'}
+            discreption={'Generate essay on any topic in one tap.'}
             image={require('../Assets/Essey.png')}
             color={'rgba(136, 48, 48, 0.18)'}
             navigation={navigation}
@@ -92,7 +92,7 @@ export function HomePage({navigation}) {
           />
           <EachCard
             title={'PLAGIARISM'}
-            discreption={'Remove plagiarism of any text in one tap.'}
+            discreption={'Remove plagiarism in one tap.'}
             image={require('../Assets/ai.png')}
             color={'#2c2250'}
             route={'PlagiarismPage'}

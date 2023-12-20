@@ -15,6 +15,7 @@ import {useState} from 'react';
 import {useToast} from 'react-native-toast-notifications';
 import axios from 'axios';
 import ResultDiaplay from '../Components/Global/ReaultDiaplay';
+import Apikey from '../Apikey';
 
 export const EsseyPage = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
@@ -36,7 +37,9 @@ export const EsseyPage = ({navigation}) => {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key={YOUR_API_KEY}',
+        url:
+          'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=' +
+          Apikey,
         headers: {
           'Content-Type': 'application/json',
         },
