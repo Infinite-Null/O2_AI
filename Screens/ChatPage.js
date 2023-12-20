@@ -46,7 +46,7 @@ export const ChatPage = ({navigation,route}) => {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=AIzaSyD46fzT8jTrrC8mFSoZWtHFzoCh79MpkYk',
+                url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key={Your Key}',
                 headers: {
                     'Content-Type': 'application/json',
                 },

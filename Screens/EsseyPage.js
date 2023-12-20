@@ -36,7 +36,7 @@ export const EsseyPage = ({navigation}) => {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=AIzaSyD46fzT8jTrrC8mFSoZWtHFzoCh79MpkYk',
+        url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key={YOUR_API_KEY}',
         headers: {
           'Content-Type': 'application/json',
         },
