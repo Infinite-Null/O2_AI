@@ -20,6 +20,7 @@ export const CodePage = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const [input, setInput] = useState('');
+  const [input1, setInput1] = useState('');
   const [loading, setloading] = useState(false);
   const [code, setCode] = useState('');
   const toast = useToast();
@@ -28,7 +29,15 @@ export const CodePage = ({navigation}) => {
       toast.show('Enter Statement', {
         type: 'danger',
         placement: 'top',
-        duration: 4000,
+        duration: 2000,
+        offset: 30,
+        animationType: 'zoom-in',
+      });
+    } else if (input1 === '') {
+      toast.show('Enter Language', {
+        type: 'danger',
+        placement: 'top',
+        duration: 2000,
         offset: 30,
         animationType: 'zoom-in',
       });
@@ -45,7 +54,7 @@ export const CodePage = ({navigation}) => {
           prompt: {
             messages: [
               {
-                content: `generate Code for ${input}`,
+                content: `generate Code for ${input} in ${input1}`,
               },
             ],
           },
@@ -97,6 +106,25 @@ export const CodePage = ({navigation}) => {
               value={input}
               onChangeText={text => {
                 setInput(text);
+              }}
+              placeholderTextColor={'rgb(197, 195, 195)'}
+              style={{
+                maxHeight: windowHeight * 0.35,
+                alignItems: 'flex-start',
+                textAlignVertical: 'top',
+                backgroundColor: '#292250',
+                padding: 15,
+                color: 'white',
+                borderBottomWidth: 1,
+                borderBottomColor: '#100b2e',
+              }}
+            />
+            <TextInput
+              clearButtonMode="while-editing"
+              placeholder={'Language'}
+              value={input1}
+              onChangeText={text => {
+                setInput1(text);
               }}
               placeholderTextColor={'rgb(197, 195, 195)'}
               style={{
