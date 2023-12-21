@@ -11,6 +11,8 @@ import {
 import React, {useContext} from 'react';
 import Context from '../Context/Context';
 import EachHistorycard from '../Components/Homepage/EachHistorycard';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faMicrophone, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -135,34 +137,83 @@ export function HomePage({navigation}) {
           />
         ))}
       </ScrollView>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('ChatPage')}
+      <View
         style={{
-          position: 'absolute',
+          width: '100%',
           alignItems: 'center',
           justifyContent: 'center',
-          bottom: 0,
-          width: windowWidth,
-          paddingBottom: 20,
-          zIndex: 2,
+          position: 'absolute',
+          bottom: 10,
         }}>
-        <TextInput
-          onFocus={() => navigation.navigate('ChatPage')}
+        <View
           style={{
-            zIndex: 1,
-            marginTop: windowHeight * 0.025,
-            width: windowWidth * 0.9,
-            marginHorizontal: windowWidth * 0.0015,
+            flexDirection: 'row',
+            height: 70,
+            alignItems: 'center',
+            justifyContent: 'center',
             backgroundColor: '#292250',
-            paddingHorizontal: 20,
+            paddingHorizontal: 10,
             borderRadius: 20,
             fontSize: windowWidth * 0.04,
-            paddingVertical: 20,
-          }}
-          placeholder="Start Chatting with AI"
-          placeholderTextColor={'rgb(197, 195, 195)'}
-        />
-      </TouchableOpacity>
+            width: '90%',
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ChatPage');
+            }}
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 100000,
+              overflow: 'hidden',
+              marginRight: 8,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <FontAwesomeIcon
+              icon={faMicrophone}
+              style={{
+                color: 'white',
+              }}
+            />
+          </TouchableOpacity>
+          <TextInput
+            onFocus={() => {
+              navigation.navigate('ChatPage');
+            }}
+            multiline={true}
+            numberOfLines={7}
+            style={{
+              backgroundColor: 'transparent',
+              fontSize: 15,
+              color: 'rgba(218, 218, 218, 1.00)',
+              flex: 1,
+            }}
+            placeholder={'Ask Anything...'}
+            placeholderTextColor={'rgba(202, 202, 202, 0.86)'}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ChatPage');
+            }}
+            style={{
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 5,
+              paddingRight: 10,
+            }}>
+            <View>
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                style={{
+                  color: 'white',
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 }
