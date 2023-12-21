@@ -80,7 +80,7 @@ export const EsseyPage = ({navigation}) => {
         flex: 1,
         backgroundColor: '#1e1b38',
       }}>
-      <TopHeader text={'Essey'} navigation={navigation} />
+      <TopHeader text={'Essay'} navigation={navigation} />
       <ScrollView>
         <View style={{paddingHorizontal: 20}}>
           <View
