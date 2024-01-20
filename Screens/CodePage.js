@@ -16,6 +16,7 @@ import {useToast} from 'react-native-toast-notifications';
 import axios from 'axios';
 import ResultDiaplay from '../Components/Global/ReaultDiaplay';
 import Apikey from '../Apikey';
+import {GetGeminiProResponse} from "../AiApi";
 
 export const CodePage = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
@@ -44,44 +45,21 @@ export const CodePage = ({navigation}) => {
       });
     } else {
       setloading(true);
-      let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url:
-          'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=' +
-          Apikey,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: JSON.stringify({
-          prompt: {
-            messages: [
-              {
-                content: `generate Code for ${input} in ${input1}`,
-              },
-            ],
-          },
-        }),
-      };
-      axios
-        .request(config)
-        .then(r => {
-          setCode(r.data.candidates[0].content);
-          setloading(false);
-        })
-        .catch(e => {
-          setloading(false);
-          if (e.message === 'Network Error') {
-            toast.show('No Internet 😟', {
-              type: 'danger',
-              placement: 'top',
-              duration: 3000,
-              offset: 30,
-              animationType: 'zoom-in',
-            });
-          }
-          console.log(e.message);
-        });
+      try {
+        const response = await GetGeminiProResponse([], `generate Code for ${input} in ${input1}`)
+        setCode(response);
+      }catch (e) {
+        if (e.message === 'Network Error') {
+          toast.show('No Internet 😟', {
+            type: 'danger',
+            placement: 'top',
+            duration: 3000,
+            offset: 30,
+            animationType: 'zoom-in',
+          });
+        }
+      }
+      setloading(false);
     }
   }
   return (

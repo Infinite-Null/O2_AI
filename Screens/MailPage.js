@@ -1,5 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react-native/no-inline-styles */
+
 import {
   Image,
   ScrollView,
@@ -16,6 +15,8 @@ import {useToast} from 'react-native-toast-notifications';
 import axios from 'axios';
 import ResultDisplay from '../Components/Global/ReaultDiaplay';
 import Apikey from '../Apikey';
+import {GetGeminiProResponse} from "../AiApi";
+import toast from "react-native-toast-notifications/src/toast";
 
 export const MailPage = ({navigation}) => {
   const width = Dimensions.get('window').width;
@@ -51,46 +52,63 @@ export const MailPage = ({navigation}) => {
         animationType: 'zoom-in',
       });
     } else {
-      setloading(true);
-      let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url:
-          'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=' +
-          Apikey,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: JSON.stringify({
-          prompt: {
-            messages: [
-              {
-                content: `compose an email from ${valueName} to ${valueTo} in subject of ${valueSubject} in a proper format`,
-              },
-            ],
-          },
-        }),
-      };
-      axios
-        .request(config)
-        .then(r => {
-          setemail(r.data.candidates[0].content);
-          setloading(false);
-        })
-        .catch(e => {
-          setloading(false);
-          if (e.message === 'Network Error') {
-            Toast.show('No Internet 😟', {
-              type: 'danger',
-              placement: 'top',
-              duration: 2000,
-              offset: 30,
-              animationType: 'zoom-in',
-            });
-            return;
-          }
-          console.log(e.message);
-        });
+        setloading(true);
+        try {
+            const response = await GetGeminiProResponse([], `compose an email from ${valueName} to ${valueTo} in subject of ${valueSubject} in a proper format with no extra thing just the email`)
+            setemail(response);
+        }catch (e) {
+            console.log(e)
+            if (e.message === 'Network Error') {
+                Toast.show('No Internet 😟', {
+                    type: 'danger',
+                    placement: 'top',
+                    duration: 3000,
+                    offset: 30,
+                    animationType: 'zoom-in',
+                });
+            }
+        }
+        setloading(false);
+      // setloading(true);
+      // let config = {
+      //   method: 'post',
+      //   maxBodyLength: Infinity,
+      //   url:
+      //     'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=' +
+      //     Apikey,
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   data: JSON.stringify({
+      //     prompt: {
+      //       messages: [
+      //         {
+      //           content: `compose an email from ${valueName} to ${valueTo} in subject of ${valueSubject} in a proper format`,
+      //         },
+      //       ],
+      //     },
+      //   }),
+      // };
+      // axios
+      //   .request(config)
+      //   .then(r => {
+      //     setemail(r.data.candidates[0].content);
+      //     setloading(false);
+      //   })
+      //   .catch(e => {
+      //     setloading(false);
+      //     if (e.message === 'Network Error') {
+      //       Toast.show('No Internet 😟', {
+      //         type: 'danger',
+      //         placement: 'top',
+      //         duration: 2000,
+      //         offset: 30,
+      //         animationType: 'zoom-in',
+      //       });
+      //       return;
+      //     }
+      //     console.log(e.message);
+      //   });
     }
   }
   return (
