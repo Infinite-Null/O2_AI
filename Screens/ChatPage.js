@@ -13,6 +13,7 @@ import ChatScroll from '../Components/ChatPage/ChatScroll';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faMicrophone, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import Apikey from '../Apikey';
+import {GetGeminiProResponse} from "../AiApi";
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -23,81 +24,26 @@ export const ChatPage = ({navigation,route}) => {
     const Toast = useToast();
     const [loading,setloading] = useState(false);
     const [VoiceRecording,setVoiceRecording] = useState(false);
-    const [requestBody,setRequestBody] = useState([]);
     const [value,setvalue] = useState('');
     const [chat,setchat] = useState([]);
     async function OnPressSend(val) {
-        if (val !== ''){
-            const requestBodyData = [...requestBody];
-            requestBodyData.push({content:val});
-            setRequestBody(requestBodyData);
-            const chats = [...chat];
-            chats.push({
-                message:val,
-                type:'user',
-            });
-            setchat(chats);
-            setvalue('');
-        }
+        const historyData = [...chat]
+        setchat((history)=>[...history,
+            {role:'user',
+            parts:val}
+        ])
+        setvalue('');
+        setloading(true);
+       const response =  await GetGeminiProResponse(historyData,val);
+        setchat((history)=>[...history,
+            {role:'model', parts:response}
+        ])
+        setloading(false);
     }
-
-    useEffect(()=>{
-        if (requestBody.length > 0 && chat[chat.length - 1].type === 'user'){
-            setloading(true);
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=' + Apikey,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                data : JSON.stringify({
-                    'prompt': {'messages': requestBody},
-                }),
-            };
-            axios.request(config).then((r)=>{
-                if (r.data.filters){
-                    const chats = [...chat];
-                    chats.push({
-                        message:"Hmm... I didn't get that, Can you please rephrase it?",
-                        type:'ai',
-                    });
-                    setchat(chats);
-                    setloading(false);
-                    return;
-                }
-                const chats = [...chat];
-                chats.push({
-                    message:r.data.candidates[0].content,
-                    type:'ai',
-                });
-                setchat(chats);
-                const requestBodyData = [...requestBody];
-                requestBodyData.push({content:r.data.candidates[0].content});
-                setRequestBody(requestBodyData);
-                setloading(false);
-            }).catch((e)=>{
-                setloading(false);
-                if (e.message === 'Network Error'){
-                    Toast.show('No Internet 😟',{
-                        animationDuration:90,
-                        dangerColor: dangerColor,
-                        type: 'danger',
-                        placement: 'center',
-                        duration: 3000,
-                        offset: 30,
-                        animationType: 'zoom-in',
-                    });
-                }
-                console.log(e.message);
-            });
-        }
-    },[requestBody]);
     useEffect(() => {
         Voice.onSpeechStart = onSpeechStartHandler;
         Voice.onSpeechEnd = onSpeechEndHandler;
         Voice.onSpeechResults = onSpeechResultsHandler;
-
         return () => {
             Voice.destroy().then(Voice.removeAllListeners);
         };
@@ -105,38 +51,33 @@ export const ChatPage = ({navigation,route}) => {
     useEffect(()=>{
         if (route.params){
             setchat(route.params.item);
-            const requestBodyData = [];
-            route.params.item.map((e)=>{
-                requestBodyData.push({content:e.message});
-            });
-            setRequestBody(requestBodyData);
         }
     },[]);
      //History
     useEffect(() => {
         if (!route.params){
-         if (chat.length === 2){
-             const Prev = [...History];
-             Prev.unshift([]);
-             Prev[0] = [...chat];
-             setHistory(Prev);
-             SaveData();
-             // console.log(Prev)
-         }
-         if (chat.length > 2){
-             const Prev = [...History];
-             Prev[0] = [...chat];
-             setHistory(Prev);
-             SaveData();
-         }} else {
+            if (chat.length === 2){
+                const Prev = [...History];
+                Prev.unshift([]);
+                Prev[0] = [...chat];
+                setHistory(Prev);
+                SaveData();
+                // console.log(Prev)
+            }
+            if (chat.length > 2){
+                const Prev = [...History];
+                Prev[0] = [...chat];
+                setHistory(Prev);
+                SaveData();
+            }} else {
             if (chat.length !== History.length && chat.length !== 0){
                 const Prev = [...History];
                 Prev[route.params.index] = [...chat];
                 setHistory(Prev);
                 SaveData();
             }
-         }
-     }, [chat]);
+        }
+    }, [chat]);
     const onSpeechStartHandler = (e) => {
         console.log('start handler==>>>', e);
     };
@@ -154,8 +95,6 @@ export const ChatPage = ({navigation,route}) => {
 
     const startRecording = async () => {
         setVoiceRecording(true);
-
-
         try {
             await Voice.start('en-Us');
             const audio = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
@@ -270,7 +209,7 @@ export const ChatPage = ({navigation,route}) => {
                         return;
                     }
                     setScrollEnabled(true);
-                    OnPressSend(value);
+                    OnPressSend(value,chat);
                 }} style={{
                     height: '100%',
                     alignItems: 'center',

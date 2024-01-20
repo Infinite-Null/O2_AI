@@ -21,10 +21,10 @@ function ChatScroll({chat, scrollEnabled}) {
       }}
       data={chat}
       renderItem={({item}) => {
-        if (item.type === 'user') {
-          return <Person text={item.message} />;
+        if (item.role === 'user') {
+          return <Person text={item.parts} />;
         } else {
-          return <Ai text={item.message} />;
+          return <Ai text={item.parts} />;
         }
       }}
       keyExtractor={(_, index) => index.toString()}
@@ -34,6 +34,4 @@ function ChatScroll({chat, scrollEnabled}) {
 
 export default memo(ChatScroll);
 
-// {chat.map((e, i) => {
-//
-//   })}
+

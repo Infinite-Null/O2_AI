@@ -29,7 +29,7 @@ function EachHistorycard({navigation, item, index, deleteData}) {
         paddingHorizontal: 20,
       }}>
       <Text style={{color: 'white'}}>
-        {getFormattedData(item[0]?.message ?? '')}
+        {getFormattedData(item[0]?.parts ?? '')}
       </Text>
       <TouchableOpacity
         onPress={() => {
