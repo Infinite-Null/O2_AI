@@ -48,10 +48,14 @@ export default function ImageChat({navigation}) {
         ])
         setvalue('');
         setloading(true);
-        const response =  await GetImageResponse(images,val);
-        setchat((history)=>[...history,
-            {role:'model', parts:response}
-        ])
+        try{
+            const response =  await GetImageResponse(images,val);
+            setchat((history)=>[...history,
+                {role:'model', parts:response}
+            ])
+        }catch (e) {
+
+        }
         setloading(false);
     }
     useEffect(() => {
@@ -112,11 +116,20 @@ export default function ImageChat({navigation}) {
         <View style={{
             flex:1,
             backgroundColor:'#1e1b38',
+            width:windowWidth,
         }}>
             <ImageView visible={visible} setvisible={setVisible} image={image}/>
             <TopHeader navigation={navigation} text={'Image'} righticon={
                 <TouchableOpacity onPress={()=>{
                     setVisible(true)
+                }} style={{
+                    backgroundColor:'rgb(42,82,176)',
+                    height:40,
+                    width:40,
+                    alignItems:'center',
+                    justifyContent:'center',
+                    borderRadius:10,
+                    elevation:10
                 }}>
                     <FontAwesomeIcon icon={faEye} style={{
                         color:'white',

@@ -259,7 +259,7 @@ function EachCard({title, discreption, navigation, route, image, color, delay}) 
     <Animatable.View
       animation={'fadeInUp'}
       delay={delay}
-      duration={500}
+      duration={300}
       style={{
         flex: 1,
         backgroundColor: color,
