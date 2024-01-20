@@ -11,6 +11,8 @@ import {OnboardingScreen} from './Screens/OnboardingScreen';
 import {Initial} from './Screens/Initial';
 import {EsseyPage} from './Screens/EsseyPage';
 import {PlagiarismPage} from './Screens/Plagiarism';
+import Features from "./Screens/Features";
+import ImageChat from "./Screens/ImageChat";
 
 function App(): JSX.Element {
   const Stack = createNativeStackNavigator();
@@ -47,6 +49,20 @@ function App(): JSX.Element {
                 headerShown: false,
               }}
             />
+              <Stack.Screen
+                  name={'ImageChat'}
+                  component={ImageChat}
+                  options={{
+                      headerShown: false,
+                  }}
+              />
+              <Stack.Screen
+                  name={'FeaturesPage'}
+                  component={Features}
+                  options={{
+                      headerShown: false,
+                  }}
+              />
             <Stack.Screen
               name={'MailPage'}
               component={MailPage}

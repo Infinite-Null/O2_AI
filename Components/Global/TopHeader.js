@@ -4,7 +4,7 @@ import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
-export const TopHeader = ({navigation, text}) => {
+export const TopHeader = ({navigation, text, righticon}) => {
   const width = Dimensions.get('window').width;
   return (
     <View
@@ -34,7 +34,10 @@ export const TopHeader = ({navigation, text}) => {
         }}>
         {text}
       </Text>
-      <View></View>
+        {righticon && righticon}
+        {!righticon && <View style={{
+            width:width * 0.07,
+        }}/>}
     </View>
   );
 };

@@ -51,4 +51,26 @@ async function GetGeminiProResponse(historyData, message) {
     return response.text().length>0 ? response.text(): "Hmm.. I didn't get that.";
 }
 
-export {GetGeminiProResponse}
+async function GetImageResponse(image,message) {
+    function fileToGenerativePart(img, mimeType) {
+        return {
+            inlineData: {
+                data: img,
+                mimeType
+            },
+        };
+    }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+
+    const prompt = message;
+
+    const imageParts = image.map((img) => fileToGenerativePart(img.base64, img.type));
+
+    const result = await model.generateContent([prompt, ...imageParts]);
+    const response = await result.response;
+    return response.text().length>0 ? response.text(): "Hmm.. I didn't get that.";
+
+}
+
+export {GetGeminiProResponse, GetImageResponse}

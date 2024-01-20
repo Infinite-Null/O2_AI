@@ -26,7 +26,7 @@ export const ChatPage = ({navigation,route}) => {
     const [VoiceRecording,setVoiceRecording] = useState(false);
     const [value,setvalue] = useState('');
     const [chat,setchat] = useState([]);
-    async function OnPressSend(val) {
+    async function OnPressSend(val,images) {
         const historyData = [...chat]
         setchat((history)=>[...history,
             {role:'user',

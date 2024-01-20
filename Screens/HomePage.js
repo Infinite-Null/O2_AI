@@ -1,18 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
-  View,
-  Dimensions,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  Image,
+    View,
+    Dimensions,
+    Text,
+    ScrollView,
+    TouchableOpacity,
+    TextInput,
+    Image, Pressable,
 } from 'react-native';
 import React, {useContext} from 'react';
 import Context from '../Context/Context';
 import EachHistorycard from '../Components/Homepage/EachHistorycard';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faMicrophone, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import * as Animatable from 'react-native-animatable';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,6 +29,8 @@ export function HomePage({navigation}) {
   return (
     <>
       <ScrollView
+          showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
         style={{
           height: windowHeight,
           backgroundColor: '#1e1b38',
@@ -55,13 +58,42 @@ export function HomePage({navigation}) {
           }}>
           Get all your answers.
         </Text>
+         <View style={{
+                flexDirection:'row',
+                alignItems:'center',
+                justifyContent:'space-between',
+         }}>
+             <Text
+                 style={{
+                     fontSize: windowWidth * 0.05,
+                     color: 'rgb(228, 228, 228)',
+                     fontWeight: 'bold',
+                     marginTop: 20,
+                     marginBottom:10
+                 }}>
+                 Features
+             </Text>
+             <Pressable onPress={()=>{
+                 navigation.navigate('FeaturesPage')
+             }}>
+                 <Text
+                     style={{
+                         fontSize: windowWidth * 0.035,
+                         color: 'rgb(144,164,245)',
+                         marginTop: 20,
+                         marginBottom:10
+                     }}>
+                     View All  →
+                 </Text>
+             </Pressable>
+         </View>
         <View
           style={{
             flexDirection: 'row',
             gap: 20,
-            marginTop: 20,
           }}>
           <EachCard
+              delay={0}
             title={'MAIL'}
             discreption={'Generate professional mail in one tap.'}
             image={require('../Assets/mail.png')}
@@ -70,6 +102,7 @@ export function HomePage({navigation}) {
             route={'MailPage'}
           />
           <EachCard
+              delay={150}
             title={'CODE'}
             discreption={'Generate error free code in one tap.'}
             image={require('../Assets/webpage.png')}
@@ -85,14 +118,16 @@ export function HomePage({navigation}) {
             marginTop: 20,
           }}>
           <EachCard
-            title={'ESSAY'}
-            discreption={'Generate essay on any topic in one tap.'}
-            image={require('../Assets/Essey.png')}
-            color={'rgba(136, 48, 48, 0.18)'}
+              delay={250}
+            title={'Image'}
+            discreption={'Chat with image in one tap.'}
+            image={require('../Assets/Image.png')}
+            color={'rgba(48,136,99,0.18)'}
             navigation={navigation}
-            route={'EsseyPage'}
+            route={'ImageChat'}
           />
           <EachCard
+              delay={350}
             title={'PLAGIARISM'}
             discreption={'Remove plagiarism in one tap.'}
             image={require('../Assets/ai.png')}
@@ -107,14 +142,15 @@ export function HomePage({navigation}) {
             alignItems: 'center',
             paddingTop: 20,
           }}>
-          <Text
-            style={{
-              fontSize: windowWidth * 0.05,
-              color: 'rgb(228, 228, 228)',
-              fontWeight: 'bold',
-            }}>
-            History
-          </Text>
+            <Text
+                style={{
+                    fontSize: windowWidth * 0.05,
+                    color: 'rgb(228, 228, 228)',
+                    fontWeight: 'bold',
+                    marginBottom:10
+                }}>
+                History
+            </Text>
         </View>
         {History.length === 0 && (
           <View
@@ -218,10 +254,12 @@ export function HomePage({navigation}) {
   );
 }
 
-function EachCard({title, discreption, navigation, route, image, color}) {
+function EachCard({title, discreption, navigation, route, image, color, delay}) {
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate(route)}
+    <Animatable.View
+      animation={'fadeInUp'}
+      delay={delay}
+      duration={500}
       style={{
         flex: 1,
         backgroundColor: color,
@@ -231,6 +269,12 @@ function EachCard({title, discreption, navigation, route, image, color}) {
         alignItems: 'center',
         paddingBottom: 20,
       }}>
+        <TouchableOpacity style={{
+            flex: 1,
+            alignContent: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }} onPress={() => navigation.navigate(route)}>
       <Image source={image} style={{height: 100, width: 100}} />
       <View style={{width: '100%'}}>
         <Text
@@ -246,10 +290,14 @@ function EachCard({title, discreption, navigation, route, image, color}) {
           style={{
             paddingHorizontal: 10,
             fontSize: windowWidth * 0.033,
+              color: 'rgb(240, 240, 240)',
           }}>
           {discreption}
         </Text>
       </View>
-    </TouchableOpacity>
+        </TouchableOpacity>
+    </Animatable.View>
   );
 }
+
+export {EachCard}
